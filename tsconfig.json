@@ -2,12 +2,15 @@
   "compilerOptions": {
     "module": "commonjs",
     "lib": ["esnext"],
-    "outDir": "build",
-    "baseUrl": "./",
     "strict": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "removeComments": true
+    "removeComments": true,
+    "outDir": "build",
+    "baseUrl": ".",
+    "paths": {
+      "@/__tests__/*": ["src/__tests__/*"]
+    }
   },
   "include": ["src/**/*"]
 }
