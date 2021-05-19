@@ -5,10 +5,11 @@
   "license": "MIT",
   "scripts": {
     "dev": "ts-node-dev --respawn --pretty --transpile-only src/server",
-    "build": "tsc --project tsconfig.production.json",
-    "prebuild": "rimraf build",
     "start:prod": "node build/server",
-    "lint": "eslint \"{src,__tests__}/**/*.ts\" --fix",
+    "prebuild": "rimraf build",
+    "build": "yarn generate && tsc --project tsconfig.production.json",
+    "generate": "prisma generate",
+    "lint": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "type-check": "tsc --pretty --noEmit",
     "test": "jest",
@@ -39,7 +40,6 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
     "testRegex": ".*\\.(test|spec)\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
@@ -48,7 +48,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "modulePathIgnorePatterns": [
+      "<rootDir>/build"
+    ]
   },
   "dependencies": {
     "@prisma/client": "^2.22.1",

@@ -9,8 +9,8 @@
     "outDir": "build",
     "baseUrl": ".",
     "paths": {
-      "@/__tests__/*": ["src/__tests__/*"]
+      "@/__tests__/*": ["__tests__/*"]
     }
   },
-  "include": ["src/**/*"]
+  "include": ["src/**/*", "__tests__/**/*"]
 }
