@@ -9,7 +9,10 @@
     "outDir": "build",
     "baseUrl": ".",
     "paths": {
-      "@/__tests__/*": ["__tests__/*"]
+      "@/__tests__/*": ["__tests__/*"],
+      "@/config/*": ["src/config/*"],
+      "@/graphql/*": ["src/graphql/*"],
+      "@/utils/*": ["src/utils/*"]
     }
   },
   "include": ["src/**/*", "__tests__/**/*"]

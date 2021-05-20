@@ -1,16 +1,18 @@
-import {PrismaClient} from '@prisma/client'
-
-const prisma = new PrismaClient()
-
-async function main() {
-  // ... you will write your Prisma Client queries here
-  await prisma.user.findMany()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
 }
 
-main()
-  .catch(e => {
-    throw e
-  })
-  .finally(async () => {
-    await prisma.$disconnect()
-  })
+import express from 'express'
+import {apolloServer} from '@/graphql/apolloServer'
+import {logger} from '@/utils/logger'
+import {port} from '@/config/constants'
+
+const app = express()
+
+apolloServer.applyMiddleware({app})
+
+app.listen(port, () => {
+  logger.info(
+    `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
+  )
+})
