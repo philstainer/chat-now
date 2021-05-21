@@ -4,8 +4,8 @@
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --respawn --transpile-only -r tsconfig-paths/register src/server",
-    "start:prod": "node build/server",
+    "dev": "tsnd --respawn --transpile-only -r tsconfig-paths/register src",
+    "start:prod": "node build",
     "prebuild": "rimraf build",
     "build": "yarn generate && tsc --project tsconfig.production.json",
     "generate": "prisma generate",
@@ -56,6 +56,9 @@
     "apollo-server-express": "^2.24.1",
     "express": "^4.17.1",
     "graphql": "^15.5.0",
+    "graphql-middleware": "^6.0.10",
+    "graphql-scalars": "^1.9.3",
+    "graphql-shield": "^7.5.0",
     "rimraf": "^3.0.2",
     "winston": "^3.3.3"
   },
@@ -69,6 +72,7 @@
     "eslint": "^7.26.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^6.0.0",
     "jest": "^26.6.3",
     "lint-staged": ">=10",

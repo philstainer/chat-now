@@ -1,5 +1,6 @@
 import {createLogger, format, transports} from 'winston'
-import {isProduction, isDev} from '@/config/constants'
+
+import {IS_DEV, IS_PRODUCTION} from '@/config/constants'
 
 const LoggerLevel = {
   error: 'error',
@@ -22,12 +23,12 @@ const logger = createLogger({
   ),
   transports: [
     new transports.Console({
-      level: isProduction ? PROD_LOG_LEVEL : DEV_LOG_LEVEL,
+      level: IS_PRODUCTION ? PROD_LOG_LEVEL : DEV_LOG_LEVEL,
     }),
   ],
 })
 
-if (isDev) {
+if (IS_DEV) {
   logger.debug('Logging initialized at debug level')
 }
 

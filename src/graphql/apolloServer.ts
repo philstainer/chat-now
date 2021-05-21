@@ -1,23 +1,9 @@
-import {ApolloServer, gql} from 'apollo-server-express'
+import {ApolloServer} from 'apollo-server-express'
 
 import {context} from '@/graphql/context'
-
-// Construct a schema, using GraphQL schema language
-const typeDefs = gql`
-  type Query {
-    hello: String
-  }
-`
-
-// Provide resolver functions for your schema fields
-const resolvers = {
-  Query: {
-    hello: () => 'Hello world!',
-  },
-}
+import {schema} from '@/graphql/schema'
 
 export const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
+  schema,
   context,
 })
