@@ -2,6 +2,12 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
+process.on('uncaughtException', er => {
+  console.error(er.stack)
+  process.exit(1)
+})
+
+import compression from 'compression'
 import express from 'express'
 import {createServer} from 'http'
 
@@ -10,6 +16,8 @@ import {apolloServer} from '@/graphql/apolloServer'
 import {logger} from '@/utils/logger'
 
 const app = express()
+
+app.use(compression())
 
 apolloServer.applyMiddleware({app})
 const server = createServer(app)
