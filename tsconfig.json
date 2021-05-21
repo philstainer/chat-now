@@ -10,9 +10,7 @@
     "baseUrl": ".",
     "paths": {
       "@/__tests__/*": ["__tests__/*"],
-      "@/config/*": ["src/config/*"],
-      "@/graphql/*": ["src/graphql/*"],
-      "@/utils/*": ["src/utils/*"]
+      "@/*": ["src/*"]
     }
   },
   "include": ["src/**/*", "__tests__/**/*"]
