@@ -31,6 +31,7 @@
     },
     "plugins": [
       "@typescript-eslint/eslint-plugin",
+      "prettier",
       "simple-import-sort"
     ],
     "extends": [
@@ -67,7 +68,8 @@
       ],
       "no-undef": "off",
       "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error"
+      "simple-import-sort/exports": "error",
+      "prettier/prettier": "error"
     }
   },
   "prettier": {
