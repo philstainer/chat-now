@@ -9,9 +9,7 @@
     "prebuild": "rimraf build",
     "build": "yarn generate && tsc --project tsconfig.production.json",
     "generate": "prisma generate",
-    "lint": "eslint \"src/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "type-check": "tsc --pretty --noEmit",
+    "type-check": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
@@ -20,8 +18,9 @@
   },
   "lint-staged": {
     "*.@(ts|tsx)": [
-      "yarn lint",
-      "yarn format"
+      "yarn eslint --fix",
+      "yarn prettier --write",
+      "yarn jest --bail --findRelatedTests"
     ]
   },
   "prettier": {
@@ -47,6 +46,14 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
+    "moduleNameMapper": {
+      "@/__tests__/(.*)": [
+        "<rootDir>/__tests__/$1"
+      ],
+      "@/(.*)": [
+        "<rootDir>/src/$1"
+      ]
+    },
     "modulePathIgnorePatterns": [
       "<rootDir>/build"
     ]
