@@ -4,109 +4,23 @@
   "main": "src/server.js",
   "license": "MIT",
   "scripts": {
+    "prepare": "husky install",
     "start": "tsnd --respawn --transpile-only -r tsconfig-paths/register src",
     "start:prod": "node build",
     "prebuild": "rimraf build",
-    "build": "yarn generate && tsc --project tsconfig.production.json",
-    "generate": "prisma generate",
-    "type-check": "tsc --noEmit",
+    "build": "yarn generate && tsc",
+    "generate": "yarn generate:prisma && yarn generate:nexus",
+    "generate:prisma": "prisma generate",
+    "generate:nexus": "yarn ts-node --transpile-only src/graphql/nexusSchema",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.@(ts|tsx)": [
-      "yarn eslint --fix",
-      "yarn prettier --write",
-      "yarn jest --bail --findRelatedTests"
-    ]
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": "tsconfig.json",
-      "sourceType": "module"
-    },
-    "plugins": [
-      "@typescript-eslint/eslint-plugin",
-      "prettier",
-      "simple-import-sort"
-    ],
-    "extends": [
-      "eslint:recommended",
-      "prettier",
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "root": true,
-    "env": {
-      "node": true,
-      "jest": true
-    },
-    "rules": {
-      "@typescript-eslint/interface-name-prefix": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "@typescript-eslint/explicit-module-boundary-types": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-use-before-define": 0,
-      "@typescript-eslint/no-var-requires": 0,
-      "@typescript-eslint/no-unused-vars": [
-        2,
-        {
-          "argsIgnorePattern": "^_"
-        }
-      ],
-      "no-console": [
-        2,
-        {
-          "allow": [
-            "warn",
-            "error"
-          ]
-        }
-      ],
-      "no-undef": "off",
-      "simple-import-sort/imports": "error",
-      "simple-import-sort/exports": "error",
-      "prettier/prettier": "error"
-    }
-  },
-  "prettier": {
-    "semi": false,
-    "arrowParens": "avoid",
-    "singleQuote": true,
-    "tabWidth": 2,
-    "printWidth": 80,
-    "bracketSpacing": false
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "testRegex": ".*\\.(test|spec)\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node",
-    "moduleNameMapper": {
-      "@/__tests__/(.*)": [
-        "<rootDir>/__tests__/$1"
-      ],
-      "@/(.*)": [
-        "<rootDir>/src/$1"
-      ]
-    },
-    "modulePathIgnorePatterns": [
-      "<rootDir>/build",
-      "<rootDir>/pgdata"
-    ]
+    "db:dev": "prisma migrate dev",
+    "db:deploy": "prisma migrate deploy",
+    "db:reset": "prisma migrate reset",
+    "db:seed": "prisma db seed --preview-feature",
+    "ts-node": "ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}'"
   },
   "dependencies": {
     "@prisma/client": "^2.22.1",
@@ -118,6 +32,7 @@
     "graphql-middleware": "^6.0.10",
     "graphql-scalars": "^1.9.3",
     "graphql-shield": "^7.5.0",
+    "nexus": "^1.0.0",
     "rimraf": "^3.0.2",
     "winston": "^3.3.3"
   },
@@ -135,6 +50,7 @@
     "eslint-plugin-simple-import-sort": "^7.0.0",
     "husky": "^6.0.0",
     "jest": "^26.6.3",
+    "jest-watch-typeahead": "^0.6.3",
     "lint-staged": ">=10",
     "prettier": "^2.3.0",
     "prisma": "2.22.1",
