@@ -10,4 +10,6 @@ process.on('uncaughtException', er => {
   process.exit(1)
 })
 
-export const {server} = require('@/server').createApp()
+const {server} = require('@/server').createApp()
+
+export {}
