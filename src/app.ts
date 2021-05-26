@@ -2,8 +2,7 @@ import compression from 'compression'
 import express from 'express'
 
 import {apolloServer} from '@/graphql/apolloServer'
-
-import {cors} from './middleware/cors'
+import {cors} from '@/middleware/cors'
 
 export const app = express()
 
