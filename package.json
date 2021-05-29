@@ -7,7 +7,7 @@
     "prepare": "husky install",
     "start": "tsnd --respawn --transpile-only -r tsconfig-paths/register src",
     "start:prod": "cross-env NODE_ENV=production node -r tsconfig-paths/register build/index.js",
-    "install": "yarn install --frozen-lockfile --production",
+    "install:prod": "yarn install --frozen-lockfile --production",
     "prebuild": "yarn generate:prisma",
     "build": "rimraf build && tsc",
     "generate": "yarn generate:prisma && yarn generate:nexus",
