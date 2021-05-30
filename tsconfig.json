@@ -18,5 +18,5 @@
     }
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "build", "src/__tests__", "src/graphql/generated"]
+  "exclude": ["node_modules", "build", "src/__tests__"]
 }

@@ -15,6 +15,13 @@ declare global {
       fieldName: FieldName,
       opts?: core.CommonInputFieldConfig<TypeName, FieldName>
     ): void // "DateTime";
+    /**
+     * A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+     */
+    email<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
+    ): void // "EmailAddress";
   }
 }
 declare global {
@@ -26,6 +33,13 @@ declare global {
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
     ): void // "DateTime";
+    /**
+     * A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/.
+     */
+    email<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void // "EmailAddress";
   }
 }
 
@@ -44,10 +58,38 @@ export interface NexusGenScalars {
   Boolean: boolean
   ID: string
   DateTime: any
+  EmailAddress: any
 }
 
 export interface NexusGenObjects {
+  Chat: {
+    // root type
+    createdAt?: NexusGenScalars['DateTime'] | null // DateTime
+    id?: string | null // String
+    messages?: Array<NexusGenRootTypes['Message'] | null> | null // [Message]
+    updatedAt?: NexusGenScalars['DateTime'] | null // DateTime
+    users?: Array<NexusGenRootTypes['User'] | null> | null // [User]
+  }
+  Message: {
+    // root type
+    createdAt?: NexusGenScalars['DateTime'] | null // DateTime
+    id?: string | null // String
+    text?: string | null // String
+    updatedAt?: NexusGenScalars['DateTime'] | null // DateTime
+  }
   Query: {}
+  User: {
+    // root type
+    chats?: Array<NexusGenRootTypes['Chat'] | null> | null // [Chat]
+    createdAt?: NexusGenScalars['DateTime'] | null // DateTime
+    displayName?: string | null // String
+    email?: NexusGenScalars['EmailAddress'] | null // EmailAddress
+    emailVerified?: string | null // String
+    fullName?: string | null // String
+    id?: string | null // String
+    image?: string | null // String
+    updatedAt?: NexusGenScalars['DateTime'] | null // DateTime
+  }
 }
 
 export interface NexusGenInterfaces {}
@@ -59,16 +101,70 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  Chat: {
+    // field return type
+    createdAt: NexusGenScalars['DateTime'] | null // DateTime
+    id: string | null // String
+    messages: Array<NexusGenRootTypes['Message'] | null> | null // [Message]
+    updatedAt: NexusGenScalars['DateTime'] | null // DateTime
+    users: Array<NexusGenRootTypes['User'] | null> | null // [User]
+  }
+  Message: {
+    // field return type
+    createdAt: NexusGenScalars['DateTime'] | null // DateTime
+    id: string | null // String
+    text: string | null // String
+    updatedAt: NexusGenScalars['DateTime'] | null // DateTime
+  }
   Query: {
     // field return type
     ok: boolean | null // Boolean
   }
+  User: {
+    // field return type
+    chats: Array<NexusGenRootTypes['Chat'] | null> | null // [Chat]
+    createdAt: NexusGenScalars['DateTime'] | null // DateTime
+    displayName: string | null // String
+    email: NexusGenScalars['EmailAddress'] | null // EmailAddress
+    emailVerified: string | null // String
+    fullName: string | null // String
+    id: string | null // String
+    image: string | null // String
+    updatedAt: NexusGenScalars['DateTime'] | null // DateTime
+  }
 }
 
 export interface NexusGenFieldTypeNames {
+  Chat: {
+    // field return type name
+    createdAt: 'DateTime'
+    id: 'String'
+    messages: 'Message'
+    updatedAt: 'DateTime'
+    users: 'User'
+  }
+  Message: {
+    // field return type name
+    createdAt: 'DateTime'
+    id: 'String'
+    text: 'String'
+    updatedAt: 'DateTime'
+  }
   Query: {
     // field return type name
     ok: 'Boolean'
+  }
+  User: {
+    // field return type name
+    chats: 'Chat'
+    createdAt: 'DateTime'
+    displayName: 'String'
+    email: 'EmailAddress'
+    emailVerified: 'String'
+    fullName: 'String'
+    id: 'String'
+    image: 'String'
+    updatedAt: 'DateTime'
   }
 }
 

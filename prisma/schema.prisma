@@ -16,6 +16,7 @@ model User {
   displayName   String?
   email         String    @unique
   emailVerified DateTime?
+  password      String
   image         String?
   chats         Chat[]
   messages      Message[]
