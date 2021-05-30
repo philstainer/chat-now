@@ -3,10 +3,9 @@
  * Do not make changes to this file directly
  */
 
-import {core} from 'nexus'
-import {FieldAuthorizeResolver} from 'nexus/dist/plugins/fieldAuthorizePlugin'
-
 import {Context} from './../context'
+import {FieldAuthorizeResolver} from 'nexus/dist/plugins/fieldAuthorizePlugin'
+import {core} from 'nexus'
 declare global {
   interface NexusGenCustomInputMethods<TypeName extends string> {
     /**
@@ -31,7 +30,7 @@ declare global {
 }
 
 declare global {
-  type NexusGen = NexusGenTypes
+  interface NexusGen extends NexusGenTypes {}
 }
 
 export interface NexusGenInputs {}
