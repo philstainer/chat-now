@@ -15,11 +15,11 @@ model User {
   fullName      String
   displayName   String?
   email         String    @unique
-  emailVerified DateTime?
   password      String
   image         String?
   chats         Chat[]
   messages      Message[]
+  verifiedAt    DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }
