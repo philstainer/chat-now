@@ -22,6 +22,20 @@ declare global {
       fieldName: FieldName,
       opts?: core.CommonInputFieldConfig<TypeName, FieldName>
     ): void // "EmailAddress";
+    /**
+     * A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
+     */
+    jwt<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
+    ): void // "JWT";
+    /**
+     * A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+     */
+    url<FieldName extends string>(
+      fieldName: FieldName,
+      opts?: core.CommonInputFieldConfig<TypeName, FieldName>
+    ): void // "URL";
   }
 }
 declare global {
@@ -40,6 +54,20 @@ declare global {
       fieldName: FieldName,
       ...opts: core.ScalarOutSpread<TypeName, FieldName>
     ): void // "EmailAddress";
+    /**
+     * A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction.
+     */
+    jwt<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void // "JWT";
+    /**
+     * A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt.
+     */
+    url<FieldName extends string>(
+      fieldName: FieldName,
+      ...opts: core.ScalarOutSpread<TypeName, FieldName>
+    ): void // "URL";
   }
 }
 
@@ -47,7 +75,14 @@ declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {}
+export interface NexusGenInputs {
+  SignUpInput: {
+    // input type
+    email: NexusGenScalars['EmailAddress'] // EmailAddress!
+    fullName: string // String!
+    password: string // String!
+  }
+}
 
 export interface NexusGenEnums {}
 
@@ -59,9 +94,16 @@ export interface NexusGenScalars {
   ID: string
   DateTime: any
   EmailAddress: any
+  JWT: any
+  URL: any
 }
 
 export interface NexusGenObjects {
+  AuthPayload: {
+    // root type
+    token: NexusGenScalars['JWT'] // JWT!
+    user: NexusGenRootTypes['User'] // User!
+  }
   Chat: {
     // root type
     createdAt?: NexusGenScalars['DateTime'] | null // DateTime
@@ -72,23 +114,26 @@ export interface NexusGenObjects {
   }
   Message: {
     // root type
+    chat?: NexusGenRootTypes['Chat'] | null // Chat
     createdAt?: NexusGenScalars['DateTime'] | null // DateTime
     id?: string | null // String
     text?: string | null // String
     updatedAt?: NexusGenScalars['DateTime'] | null // DateTime
+    user?: NexusGenRootTypes['User'] | null // User
   }
+  Mutation: {}
   Query: {}
   User: {
     // root type
     chats?: Array<NexusGenRootTypes['Chat'] | null> | null // [Chat]
-    createdAt?: NexusGenScalars['DateTime'] | null // DateTime
+    createdAt: NexusGenScalars['DateTime'] // DateTime!
     displayName?: string | null // String
-    email?: NexusGenScalars['EmailAddress'] | null // EmailAddress
-    emailVerified?: string | null // String
-    fullName?: string | null // String
-    id?: string | null // String
-    image?: string | null // String
-    updatedAt?: NexusGenScalars['DateTime'] | null // DateTime
+    email: NexusGenScalars['EmailAddress'] // EmailAddress!
+    fullName: string // String!
+    id: string // String!
+    image?: NexusGenScalars['URL'] | null // URL
+    updatedAt: NexusGenScalars['DateTime'] // DateTime!
+    verifiedAt?: NexusGenScalars['DateTime'] | null // DateTime
   }
 }
 
@@ -101,6 +146,11 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
+  AuthPayload: {
+    // field return type
+    token: NexusGenScalars['JWT'] // JWT!
+    user: NexusGenRootTypes['User'] // User!
+  }
   Chat: {
     // field return type
     createdAt: NexusGenScalars['DateTime'] | null // DateTime
@@ -111,10 +161,16 @@ export interface NexusGenFieldTypes {
   }
   Message: {
     // field return type
+    chat: NexusGenRootTypes['Chat'] | null // Chat
     createdAt: NexusGenScalars['DateTime'] | null // DateTime
     id: string | null // String
     text: string | null // String
     updatedAt: NexusGenScalars['DateTime'] | null // DateTime
+    user: NexusGenRootTypes['User'] | null // User
+  }
+  Mutation: {
+    // field return type
+    signUp: NexusGenRootTypes['AuthPayload'] | null // AuthPayload
   }
   Query: {
     // field return type
@@ -123,18 +179,23 @@ export interface NexusGenFieldTypes {
   User: {
     // field return type
     chats: Array<NexusGenRootTypes['Chat'] | null> | null // [Chat]
-    createdAt: NexusGenScalars['DateTime'] | null // DateTime
+    createdAt: NexusGenScalars['DateTime'] // DateTime!
     displayName: string | null // String
-    email: NexusGenScalars['EmailAddress'] | null // EmailAddress
-    emailVerified: string | null // String
-    fullName: string | null // String
-    id: string | null // String
-    image: string | null // String
-    updatedAt: NexusGenScalars['DateTime'] | null // DateTime
+    email: NexusGenScalars['EmailAddress'] // EmailAddress!
+    fullName: string // String!
+    id: string // String!
+    image: NexusGenScalars['URL'] | null // URL
+    updatedAt: NexusGenScalars['DateTime'] // DateTime!
+    verifiedAt: NexusGenScalars['DateTime'] | null // DateTime
   }
 }
 
 export interface NexusGenFieldTypeNames {
+  AuthPayload: {
+    // field return type name
+    token: 'JWT'
+    user: 'User'
+  }
   Chat: {
     // field return type name
     createdAt: 'DateTime'
@@ -145,10 +206,16 @@ export interface NexusGenFieldTypeNames {
   }
   Message: {
     // field return type name
+    chat: 'Chat'
     createdAt: 'DateTime'
     id: 'String'
     text: 'String'
     updatedAt: 'DateTime'
+    user: 'User'
+  }
+  Mutation: {
+    // field return type name
+    signUp: 'AuthPayload'
   }
   Query: {
     // field return type name
@@ -160,15 +227,24 @@ export interface NexusGenFieldTypeNames {
     createdAt: 'DateTime'
     displayName: 'String'
     email: 'EmailAddress'
-    emailVerified: 'String'
     fullName: 'String'
     id: 'String'
-    image: 'String'
+    image: 'URL'
     updatedAt: 'DateTime'
+    verifiedAt: 'DateTime'
   }
 }
 
-export interface NexusGenArgTypes {}
+export interface NexusGenArgTypes {
+  Mutation: {
+    signUp: {
+      // args
+      email?: NexusGenScalars['EmailAddress'] | null // EmailAddress
+      fullName: string // String!
+      password: string // String!
+    }
+  }
+}
 
 export interface NexusGenAbstractTypeMembers {}
 
@@ -176,7 +252,7 @@ export interface NexusGenTypeInterfaces {}
 
 export type NexusGenObjectNames = keyof NexusGenObjects
 
-export type NexusGenInputNames = never
+export type NexusGenInputNames = keyof NexusGenInputs
 
 export type NexusGenEnumNames = never
 

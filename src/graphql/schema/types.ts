@@ -1,3 +1,4 @@
+export * from '@/graphql/schema/Auth'
 export * from '@/graphql/schema/Chat'
 export * from '@/graphql/schema/Message'
 export * from '@/graphql/schema/Root'
