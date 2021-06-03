@@ -1,0 +1,30 @@
+version: "3.9"
+services:
+  test-db:
+    image: "postgres:13"
+    container_name: test-db
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tests
+    ports:
+      - 5433:5432
+    networks:
+      - test_vm
+
+  server:
+    build:
+      context: .
+      target: tests
+    environment:
+      DATABASE_URL: postgresql://root:password@test-db:5432/tests?schema=public
+      JWT_SECRET: secret
+    volumes:
+      - ./:/app
+    depends_on:
+      - test-db
+    networks:
+      - test_vm
+
+networks:
+  test_vm:

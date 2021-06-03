@@ -1,21 +1,22 @@
 module.exports = {
-  moduleFileExtensions: ['ts', 'js', 'json'],
-  testRegex: '.*\\.(test|spec)\\.ts$',
-  // transform: {
-  //   '^.+\\.(t|j)s$': 'ts-jest',
-  // },
+  roots: ['<rootDir>/src'],
+  testMatch: [
+    '**/__tests__/**/*.+(ts|tsx|js)',
+    '**/?(*.)+(spec|test).+(ts|tsx|js)',
+  ],
+  transform: {
+    '^.+\\.(ts|tsx)$': 'ts-jest',
+  },
+  moduleNameMapper: {
+    '^@/(.*)$': ['<rootDir>/src/$1'],
+  },
   collectCoverageFrom: ['**/*.(t|j)s'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
-  coverageDirectory: './coverage',
+  coverageDirectory: '<rootDir>/coverage',
   testEnvironment: 'node',
-  moduleNameMapper: {
-    '@/test/*': ['src/test/*'],
-    '@/graphql/*': ['src/graphql/*'],
-    '@/lib/*': ['src/lib/*'],
-    '@/utils/*': ['src/utils/*'],
-  },
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/pgdata'],
+  testPathIgnorePatterns: ['/node_modules/', 'setupTests'],
 }
