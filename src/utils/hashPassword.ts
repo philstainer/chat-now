@@ -10,5 +10,5 @@ export const passwordError =
 export const hashPassword = (password: string): Promise<string> => {
   if (!isStrongPassword(password)) throw new UserInputError(passwordError)
 
-  return hash(password, SALT_ROUNDS)
+  return hash(password, Number(SALT_ROUNDS))
 }
