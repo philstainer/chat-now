@@ -19,17 +19,16 @@ export const signUp = mutationField('signUp', {
     const {email, password} = args
 
     const existingUser = await ctx.prisma.user.findUnique({where: {email}})
-
     if (existingUser) throw new ApolloError(emailExistsError)
 
     const hashedPassword = await hashPassword(password)
 
-    const user = await ctx.prisma.user.create({
+    const newUser = await ctx.prisma.user.create({
       data: {...args, email, password: hashedPassword},
     })
 
-    const token = generateToken({sub: user.id})
+    const token = generateToken({sub: newUser.id})
 
-    return {token, user}
+    return {token, user: newUser}
   },
 })

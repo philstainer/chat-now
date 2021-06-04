@@ -5,6 +5,7 @@ import {JWT_SECRET} from '@/config/constants'
 import {apolloServer} from '@/graphql/apolloServer'
 import {prisma} from '@/graphql/context'
 import {emailExistsError} from '@/graphql/schema/Auth'
+import {passwordError} from '@/utils/hashPassword'
 
 const query = gql`
   mutation SignUpMutation(
@@ -37,6 +38,18 @@ test('should throw error if user already exists', async () => {
   expect(result.errors?.[0].message).toEqual(emailExistsError)
 })
 
+test('should throw error if password is weak', async () => {
+  const data = {
+    fullName: 'Phil Stainer',
+    email: 'me@philstainer.io',
+    password: 'weakpass',
+  }
+
+  const result = await apolloServer.executeOperation({query, variables: data})
+
+  expect(result.errors?.[0].message).toEqual(passwordError)
+})
+
 test('should create and return user and token', async () => {
   const data = {
     fullName: 'Phil Stainer',
@@ -53,5 +66,5 @@ test('should create and return user and token', async () => {
   expect(user).toMatchObject({fullName: data.fullName, email: data.email})
 
   const {sub} = verify(token, JWT_SECRET) as any
-  expect(sub).toEqual(user.id)
+  expect(sub).toEqual(createdUser?.id)
 })
