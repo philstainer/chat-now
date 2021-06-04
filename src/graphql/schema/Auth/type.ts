@@ -1,6 +1,6 @@
 import {objectType} from 'nexus'
 
-import {User} from '../User'
+import {User} from '@/graphql/schema/User'
 
 export const AuthPayload = objectType({
   name: 'AuthPayload',

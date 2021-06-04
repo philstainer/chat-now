@@ -1,9 +1,6 @@
-// Load .env when not in production
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config({path: '.env.local'})
-}
+import {createApp} from '@/server'
 
-const {server} = require('@/server').createApp()
+const {server} = createApp()
 
 // Catch uncaught exceptions
 process.on('uncaughtException', er => {
@@ -11,5 +8,3 @@ process.on('uncaughtException', er => {
   server?.close()
   process.exit(1)
 })
-
-export {}

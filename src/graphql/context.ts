@@ -4,7 +4,7 @@ export interface Context {
   prisma: PrismaClient
 }
 
-const prisma = new PrismaClient()
+export const prisma = new PrismaClient()
 
 export const context = (): Context => ({
   prisma: prisma,

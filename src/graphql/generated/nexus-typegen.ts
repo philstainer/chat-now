@@ -75,14 +75,7 @@ declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {
-  SignUpInput: {
-    // input type
-    email: NexusGenScalars['EmailAddress'] // EmailAddress!
-    fullName: string // String!
-    password: string // String!
-  }
-}
+export interface NexusGenInputs {}
 
 export interface NexusGenEnums {}
 
@@ -239,7 +232,7 @@ export interface NexusGenArgTypes {
   Mutation: {
     signUp: {
       // args
-      email?: NexusGenScalars['EmailAddress'] | null // EmailAddress
+      email: NexusGenScalars['EmailAddress'] // EmailAddress!
       fullName: string // String!
       password: string // String!
     }
@@ -252,7 +245,7 @@ export interface NexusGenTypeInterfaces {}
 
 export type NexusGenObjectNames = keyof NexusGenObjects
 
-export type NexusGenInputNames = keyof NexusGenInputs
+export type NexusGenInputNames = never
 
 export type NexusGenEnumNames = never
 

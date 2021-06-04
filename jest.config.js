@@ -10,12 +10,13 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': ['<rootDir>/src/$1'],
   },
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/utils/setupTests.ts'],
   collectCoverageFrom: ['**/*.(t|j)s'],
   watchPlugins: [
     'jest-watch-typeahead/filename',
     'jest-watch-typeahead/testname',
   ],
-  coverageDirectory: '<rootDir>/coverage',
+  coverageDirectory: '<rootDir>/src/coverage',
   testEnvironment: 'node',
   modulePathIgnorePatterns: ['<rootDir>/build', '<rootDir>/pgdata'],
   testPathIgnorePatterns: ['/node_modules/', 'setupTests'],

@@ -2,7 +2,7 @@ import {logger} from '@/utils/logger'
 
 const cache: any = {}
 
-const accessEnv = (key: string, defaultValue?: string) => {
+const accessEnv = (key: string, defaultValue?: string | number): any => {
   if (!(key in process.env)) {
     if (defaultValue) return defaultValue
 
