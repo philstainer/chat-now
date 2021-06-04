@@ -21,7 +21,7 @@
     "ts-node": "ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}'",
     "docker:test": "yarn docker:prepare && yarn docker:run",
     "docker:prepare": "docker-compose -f docker-compose.test.yml run --rm server ./src/utils/wait-for-it.sh test-db:5432 -- yarn db:reset --force --skip-generate",
-    "docker:run": "docker-compose -f docker-compose.test.yml run --rm server ./src/utils/wait-for-it.sh test-db:5432 -- yarn test"
+    "docker:run": "docker-compose -f docker-compose.test.yml run --rm server ./src/utils/wait-for-it.sh test-db:5432 -- yarn jest -i"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
