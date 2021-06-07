@@ -18,7 +18,7 @@ services:
       target: tests
     environment:
       DATABASE_URL: postgresql://root:password@test-db:5432/tests?schema=public
-      JWT_SECRET: secret
+      COOKIE_SECRET: cookie
     volumes:
       - ./:/app
     depends_on:

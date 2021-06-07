@@ -1,9 +1,7 @@
 import {gql} from 'apollo-server-express'
-import {verify} from 'jsonwebtoken'
 
-import {JWT_SECRET} from '@/config/constants'
 import {apolloServer} from '@/graphql/apolloServer'
-import {prisma} from '@/graphql/context'
+import {prisma, RSession} from '@/graphql/context'
 import {emailExistsError} from '@/graphql/schema/Auth'
 import {passwordError} from '@/utils/hashPassword'
 
@@ -14,12 +12,9 @@ const query = gql`
     $password: String!
   ) {
     signUp(fullName: $fullName, email: $email, password: $password) {
-      token
-      user {
-        id
-        fullName
-        email
-      }
+      id
+      fullName
+      email
     }
   }
 `
@@ -50,21 +45,26 @@ test('should throw error if password is weak', async () => {
   expect(result.errors?.[0].message).toEqual(passwordError)
 })
 
-test('should create and return user and token', async () => {
+test('should create and return user', async () => {
   const data = {
     fullName: 'Phil Stainer',
     email: 'phil@philstainer.io',
     password: 'strongP@ssw0rd123',
   }
 
-  const result = await apolloServer.executeOperation({query, variables: data})
+  const ctx = {req: {session: {}}}
+  const result = await apolloServer.executeOperation(
+    {query, variables: data},
+    ctx
+  )
 
-  const createdUser = await prisma.user.findUnique({where: {email: data.email}})
-  expect(createdUser).toBeTruthy()
-
-  const {token, user} = result.data?.signUp
+  const user = result.data?.signUp
   expect(user).toMatchObject({fullName: data.fullName, email: data.email})
 
-  const {sub} = verify(token, JWT_SECRET) as any
-  expect(sub).toEqual(createdUser?.id)
+  const createdUser = await prisma.user.findUnique({
+    where: {id: user.id},
+  })
+  expect(createdUser).toBeTruthy()
+
+  expect((ctx.req.session as RSession).userId).toEqual(createdUser?.id)
 })

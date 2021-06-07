@@ -2,14 +2,13 @@ import {ApolloError} from 'apollo-server-express'
 import {compare} from 'bcryptjs'
 import {arg, mutationField, nonNull, stringArg} from 'nexus'
 
-import {AuthPayload} from '@/graphql/schema/Auth/type'
 import {GQLEmail} from '@/graphql/schema/Root'
-import {generateToken} from '@/utils/generateToken'
+import {User} from '@/graphql/schema/User/type'
 
 export const genericError = 'Incorrect email or password, please try again.'
 
 export const signIn = mutationField('signIn', {
-  type: AuthPayload.name,
+  type: nonNull(User.name),
   args: {
     email: nonNull(arg({type: GQLEmail})),
     password: nonNull(stringArg()),
@@ -23,8 +22,8 @@ export const signIn = mutationField('signIn', {
     const passwordsMatch = await compare(password, existingUser.password)
     if (!passwordsMatch) throw new ApolloError(genericError)
 
-    const token = generateToken({sub: existingUser.id})
+    ctx.session.userId = existingUser.id
 
-    return {token, user: existingUser}
+    return existingUser
   },
 })

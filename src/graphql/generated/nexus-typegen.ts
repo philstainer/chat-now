@@ -97,11 +97,6 @@ export interface NexusGenScalars {
 }
 
 export interface NexusGenObjects {
-  AuthPayload: {
-    // root type
-    token: NexusGenScalars['JWT'] // JWT!
-    user: NexusGenRootTypes['User'] // User!
-  }
   Chat: {
     // root type
     createdAt?: NexusGenScalars['DateTime'] | null // DateTime
@@ -121,6 +116,13 @@ export interface NexusGenObjects {
   }
   Mutation: {}
   Query: {}
+  Session: {
+    // root type
+    data: string // String!
+    expiresAt: NexusGenScalars['DateTime'] // DateTime!
+    id: string // String!
+    sid: string // String!
+  }
   User: {
     // root type
     chats?: Array<NexusGenRootTypes['Chat'] | null> | null // [Chat]
@@ -144,11 +146,6 @@ export type NexusGenRootTypes = NexusGenObjects
 export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 
 export interface NexusGenFieldTypes {
-  AuthPayload: {
-    // field return type
-    token: NexusGenScalars['JWT'] // JWT!
-    user: NexusGenRootTypes['User'] // User!
-  }
   Chat: {
     // field return type
     createdAt: NexusGenScalars['DateTime'] | null // DateTime
@@ -168,14 +165,21 @@ export interface NexusGenFieldTypes {
   }
   Mutation: {
     // field return type
-    signIn: NexusGenRootTypes['AuthPayload'] | null // AuthPayload
-    signUp: NexusGenRootTypes['AuthPayload'] | null // AuthPayload
+    signIn: NexusGenRootTypes['User'] // User!
+    signUp: NexusGenRootTypes['User'] // User!
   }
   Query: {
     // field return type
     findUniqueUser: NexusGenRootTypes['User'] | null // User
     me: NexusGenRootTypes['User'] | null // User
     ok: boolean | null // Boolean
+  }
+  Session: {
+    // field return type
+    data: string // String!
+    expiresAt: NexusGenScalars['DateTime'] // DateTime!
+    id: string // String!
+    sid: string // String!
   }
   User: {
     // field return type
@@ -192,11 +196,6 @@ export interface NexusGenFieldTypes {
 }
 
 export interface NexusGenFieldTypeNames {
-  AuthPayload: {
-    // field return type name
-    token: 'JWT'
-    user: 'User'
-  }
   Chat: {
     // field return type name
     createdAt: 'DateTime'
@@ -216,14 +215,21 @@ export interface NexusGenFieldTypeNames {
   }
   Mutation: {
     // field return type name
-    signIn: 'AuthPayload'
-    signUp: 'AuthPayload'
+    signIn: 'User'
+    signUp: 'User'
   }
   Query: {
     // field return type name
     findUniqueUser: 'User'
     me: 'User'
     ok: 'Boolean'
+  }
+  Session: {
+    // field return type name
+    data: 'String'
+    expiresAt: 'DateTime'
+    id: 'String'
+    sid: 'String'
   }
   User: {
     // field return type name

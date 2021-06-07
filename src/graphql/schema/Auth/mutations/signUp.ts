@@ -1,15 +1,14 @@
 import {ApolloError} from 'apollo-server-express'
 import {arg, mutationField, nonNull, stringArg} from 'nexus'
 
-import {AuthPayload} from '@/graphql/schema/Auth/type'
 import {GQLEmail} from '@/graphql/schema/Root'
-import {generateToken} from '@/utils/generateToken'
+import {User} from '@/graphql/schema/User/type'
 import {hashPassword} from '@/utils/hashPassword'
 
 export const emailExistsError = 'Email in use. Use a different email or log in'
 
 export const signUp = mutationField('signUp', {
-  type: AuthPayload.name,
+  type: nonNull(User.name),
   args: {
     fullName: nonNull(stringArg()),
     email: nonNull(arg({type: GQLEmail})),
@@ -27,8 +26,8 @@ export const signUp = mutationField('signUp', {
       data: {...args, email, password: hashedPassword},
     })
 
-    const token = generateToken({sub: newUser.id})
+    ctx.session.userId = newUser.id
 
-    return {token, user: newUser}
+    return newUser
   },
 })
