@@ -27,6 +27,7 @@
     "schema": "src/prisma/schema.prisma"
   },
   "dependencies": {
+    "@paljs/plugins": "^3.3.3",
     "@prisma/client": "^2.23.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.0",

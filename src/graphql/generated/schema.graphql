@@ -75,6 +75,8 @@ type Mutation {
 }
 
 type Query {
+  findUniqueUser(where: UserFilters!): User
+  me: User
   ok: Boolean
 }
 
@@ -125,4 +127,8 @@ type User {
   verifiedAt of the user
   """
   verifiedAt: DateTime
+}
+
+input UserFilters {
+  id: String!
 }

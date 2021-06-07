@@ -75,7 +75,12 @@ declare global {
   interface NexusGen extends NexusGenTypes {}
 }
 
-export interface NexusGenInputs {}
+export interface NexusGenInputs {
+  UserFilters: {
+    // input type
+    id: string // String!
+  }
+}
 
 export interface NexusGenEnums {}
 
@@ -168,6 +173,8 @@ export interface NexusGenFieldTypes {
   }
   Query: {
     // field return type
+    findUniqueUser: NexusGenRootTypes['User'] | null // User
+    me: NexusGenRootTypes['User'] | null // User
     ok: boolean | null // Boolean
   }
   User: {
@@ -214,6 +221,8 @@ export interface NexusGenFieldTypeNames {
   }
   Query: {
     // field return type name
+    findUniqueUser: 'User'
+    me: 'User'
     ok: 'Boolean'
   }
   User: {
@@ -244,6 +253,12 @@ export interface NexusGenArgTypes {
       password: string // String!
     }
   }
+  Query: {
+    findUniqueUser: {
+      // args
+      where: NexusGenInputs['UserFilters'] // UserFilters!
+    }
+  }
 }
 
 export interface NexusGenAbstractTypeMembers {}
@@ -252,7 +267,7 @@ export interface NexusGenTypeInterfaces {}
 
 export type NexusGenObjectNames = keyof NexusGenObjects
 
-export type NexusGenInputNames = never
+export type NexusGenInputNames = keyof NexusGenInputs
 
 export type NexusGenEnumNames = never
 
