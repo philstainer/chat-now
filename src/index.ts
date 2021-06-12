@@ -5,18 +5,19 @@ import {PORT} from '@/config/constants'
 import {apolloServer} from '@/graphql/apolloServer'
 import {logger} from '@/utils/logger'
 
-const server = createServer(app)
+const httpServer = createServer(app)
+
+apolloServer.applyMiddleware({app, cors: false, path: '/graphql'})
+apolloServer.installSubscriptionHandlers(httpServer)
 
 // Catch uncaught exceptions
 process.on('uncaughtException', er => {
   console.error(er.stack)
-  server?.close()
+  httpServer?.close()
   process.exit(1)
 })
 
-apolloServer.installSubscriptionHandlers(server)
-
-server.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   logger.info(
     `🚀 Server ready at http://localhost:${PORT}${
       apolloServer.graphqlPath

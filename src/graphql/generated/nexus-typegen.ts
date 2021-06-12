@@ -170,6 +170,7 @@ export interface NexusGenFieldTypes {
   }
   Query: {
     // field return type
+    chats: NexusGenRootTypes['Chat'][] // [Chat!]!
     findUniqueUser: NexusGenRootTypes['User'] | null // User
     me: NexusGenRootTypes['User'] | null // User
     ok: boolean | null // Boolean
@@ -220,6 +221,7 @@ export interface NexusGenFieldTypeNames {
   }
   Query: {
     // field return type name
+    chats: 'Chat'
     findUniqueUser: 'User'
     me: 'User'
     ok: 'Boolean'

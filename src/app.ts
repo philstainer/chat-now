@@ -4,13 +4,12 @@ import express from 'express'
 import expressSession from 'express-session'
 import ms from 'ms'
 
-import {apolloServer} from '@/graphql/apolloServer'
 import {cors} from '@/middleware/cors'
 
 import {COOKIE_SECRET, IS_PRODUCTION} from './config/constants'
 import {prisma} from './graphql/context'
 
-export const app = express()
+const app = express()
 
 app.use(cors)
 
@@ -34,4 +33,4 @@ app.use(
   })
 )
 
-apolloServer.applyMiddleware({app, cors: false, path: '/graphql'})
+export {app}

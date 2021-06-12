@@ -19,6 +19,21 @@ const query = gql`
   }
 `
 
+test('should throw error if already logged in', async () => {
+  const data = {
+    fullName: 'Phil Stainer',
+    email: 'me@philstainer.io',
+    password: 'strongP@ssw0rd123',
+  }
+
+  const ctx = {req: {session: {userId: 'some id'}}}
+  const result = await apolloServer.executeOperation(
+    {query, variables: data},
+    ctx
+  )
+  expect(result.errors?.[0].message).toMatch(/not authorized/i)
+})
+
 test('should throw error if user already exists', async () => {
   const data = {
     fullName: 'Phil Stainer',

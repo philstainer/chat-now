@@ -14,6 +14,7 @@ export const signUp = mutationField('signUp', {
     email: nonNull(arg({type: GQLEmail})),
     password: nonNull(stringArg()),
   },
+  authorize: (root, args, {session}) => !session?.userId,
   resolve: async (_parent, args, ctx, _info) => {
     const {email, password} = args
 
