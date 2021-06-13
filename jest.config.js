@@ -10,7 +10,7 @@ module.exports = {
   moduleNameMapper: {
     '^@/(.*)$': ['<rootDir>/src/$1'],
   },
-  setupFilesAfterEnv: ['<rootDir>/src/__tests__/utils/setupTests.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/__tests__/setupTests.ts'],
   collectCoverageFrom: ['**/*.(t|j)s'],
   watchPlugins: [
     'jest-watch-typeahead/filename',

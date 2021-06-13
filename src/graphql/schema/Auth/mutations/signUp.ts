@@ -1,3 +1,4 @@
+import {PrismaSelect} from '@paljs/plugins'
 import {ApolloError} from 'apollo-server-express'
 import {arg, mutationField, nonNull, stringArg} from 'nexus'
 
@@ -15,7 +16,7 @@ export const signUp = mutationField('signUp', {
     password: nonNull(stringArg()),
   },
   authorize: (root, args, {session}) => !session?.userId,
-  resolve: async (_parent, args, ctx, _info) => {
+  resolve: async (_parent, args, ctx, info) => {
     const {email, password} = args
 
     const existingUser = await ctx.prisma.user.findUnique({where: {email}})
@@ -23,8 +24,11 @@ export const signUp = mutationField('signUp', {
 
     const hashedPassword = await hashPassword(password)
 
+    const select = new PrismaSelect(info).value
+
     const newUser = await ctx.prisma.user.create({
       data: {...args, email, password: hashedPassword},
+      ...select,
     })
 
     ctx.session.userId = newUser.id

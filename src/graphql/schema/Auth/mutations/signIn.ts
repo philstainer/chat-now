@@ -1,3 +1,4 @@
+import {PrismaSelect} from '@paljs/plugins'
 import {ApolloError} from 'apollo-server-express'
 import {compare} from 'bcryptjs'
 import {arg, mutationField, nonNull, stringArg} from 'nexus'
@@ -14,10 +15,18 @@ export const signIn = mutationField('signIn', {
     password: nonNull(stringArg()),
   },
   authorize: (root, args, {session}) => !session?.userId,
-  resolve: async (_parent, args, ctx, _info) => {
+  resolve: async (_parent, args, ctx, info) => {
     const {email, password} = args
 
-    const existingUser = await ctx.prisma.user.findUnique({where: {email}})
+    const select = new PrismaSelect(info).value
+
+    // Select password for compare
+    select.select.password = true
+
+    const existingUser = await ctx.prisma.user.findUnique({
+      where: {email},
+      ...select,
+    })
     if (!existingUser) throw new ApolloError(genericError)
 
     const passwordsMatch = await compare(password, existingUser.password)

@@ -1,10 +1,4 @@
 {
   "extends": "./tsconfig.json",
-  "exclude": [
-    "node_modules",
-    "build",
-    "**/*.test.ts",
-    "./src/coverage",
-    "./src/graphql/generated"
-  ]
+  "exclude": ["node_modules", "build", "**/*.test.ts", "./src/coverage"]
 }
