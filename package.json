@@ -19,8 +19,9 @@
     "db:reset": "prisma migrate reset",
     "db:seed": "prisma db seed --preview-feature",
     "ts-node": "ts-node -r tsconfig-paths/register --compiler-options '{\"module\":\"CommonJS\"}'",
-    "docker:test": "yarn docker:prepare && yarn docker:run",
+    "docker:test": "yarn docker:prepare && yarn docker:generate && yarn docker:run",
     "docker:prepare": "docker-compose -f docker-compose.test.yml run --rm server ./src/utils/wait-for-it.sh test-db:5432 -- yarn db:reset --force --skip-generate",
+    "docker:generate": "docker-compose -f docker-compose.test.yml run --rm server ./src/utils/wait-for-it.sh test-db:5432 -- yarn generate",
     "docker:run": "docker-compose -f docker-compose.test.yml run --rm server ./src/utils/wait-for-it.sh test-db:5432 -- yarn jest -i"
   },
   "prisma": {
