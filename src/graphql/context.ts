@@ -1,12 +1,12 @@
 import {PrismaClient} from '@prisma/client'
-import {PubSub} from 'apollo-server-express'
+import {ExpressContext, PubSub} from 'apollo-server-express'
 import {Session} from 'express-session'
 
 import {IS_DEV} from '@/config/constants'
 import {pubsub} from '@/graphql/pubsub'
 
 export interface RSession extends Session {
-  userId: string
+  userId?: string
 }
 
 export interface Context {
@@ -20,10 +20,12 @@ export const prisma = new PrismaClient({
   log: IS_DEV ? ['query', 'info', `warn`, `error`] : [],
 })
 
-export const context = ({req}: any): Context => {
+export const context = ({req, connection}: ExpressContext): Context => {
+  const session = req?.session || connection?.context?.session
+
   return {
-    session: req?.session,
-    prisma: prisma,
+    session,
+    prisma,
     pubsub,
     select: {},
   }

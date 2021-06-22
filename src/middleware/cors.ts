@@ -8,4 +8,4 @@ const corsOptions = {
   credentials: true,
 }
 
-export const cors = corsModule(corsOptions)
+export const corsMiddleware = corsModule(corsOptions)

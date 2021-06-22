@@ -1,6 +1,8 @@
 import {prisma} from '@/graphql/context'
 import {logger} from '@/utils/logger'
 
+jest.mock('@quixo3/prisma-session-store')
+
 beforeAll(() => prisma.$connect())
 
 const resetDatabase = async () => {
